@@ -1,5 +1,5 @@
 'use strict';
-let money,
+let money = 60000,
     income = 'кураторство',
     addExpenses = 'Топливо, Продукты, Связь',
     deposit = true,
@@ -31,7 +31,7 @@ amount1 = +prompt('Во сколько это обойдется?', '20000');
 expenses2 = prompt('Введите обязательную статью расходов.', 'Бензин');
 amount2 = +prompt('Во сколько это обойдется?', '10000');
 
-budgetMonth = amount1 + amount2;
+budgetMonth = money - (amount1 + amount2);
 console.log('Бюджет на месяц: ', budgetMonth);
 console.log('Цель будет достигнута за:', Math.ceil(mission / budgetMonth), 'месяцев');
 
