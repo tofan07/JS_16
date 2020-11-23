@@ -6,8 +6,8 @@ let money,
     mission = 120000, 
     period = 6,
     expenses1 = '',
-    amount1 = '',
     expenses2 = '',
+    amount1 = '',
     amount2 = '',
     budgetMonth = '',
     budgetDay = '';
@@ -28,13 +28,11 @@ deposit = confirm('Есть ли у вас депозит в банке?');
 
 expenses1 = prompt('Введите обязательную статью расходов.', 'Коммунальные платежи');
 amount1 = +prompt('Во сколько это обойдется?', 20000);
-
 expenses2 = prompt('Введите обязательную статью расходов.', 'Бензин');
 amount2 = +prompt('Во сколько это обойдется?', 10000);
 
 budgetMonth = amount1 + amount2;
 console.log('Бюджет на месяц: ', budgetMonth);
-
 console.log('Цель будет достигнута за:', Math.ceil(mission / budgetMonth), 'месяцев');
 
 budgetDay = budgetMonth / 30;
