@@ -1,6 +1,6 @@
 'use strict';
 // Задание 1
-let lang = 'en';
+let lang = prompt('Выберите язык, введите: ru / en');
 let days,
     daysRu = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
     daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -36,10 +36,7 @@ days = {
 console.log(days[lang]);
 
 // Задание 2
-let namePerson = 'Иван';
+let namePerson = prompt('Введите имя:');
 
 let rank = (namePerson === 'Артем') ? 'Директор' : ((namePerson === 'Максим') ? 'Преподаватель' : 'Студент');
 console.log('rank: ', rank);
-
-
-
