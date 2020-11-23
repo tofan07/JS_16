@@ -39,4 +39,4 @@ console.log(days[lang]);
 let namePerson = prompt('Введите имя:');
 
 let rank = (namePerson === 'Артем') ? 'Директор' : ((namePerson === 'Максим') ? 'Преподаватель' : 'Студент');
-console.log('rank: ', rank);
+console.log('Должность: ', rank);
