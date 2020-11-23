@@ -1,6 +1,6 @@
 'use strict';
 // Задание 1
-let lang = 'enw';
+let lang = 'en';
 let days,
     daysRu = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
     daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
