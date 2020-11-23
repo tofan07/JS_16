@@ -1,8 +1,8 @@
 'use strict';
-let money = 60000,
+let money,
     income = 'кураторство',
-    addExpenses = 'Топливо, Продукты, Связь',
-    deposit = true,
+    addExpenses = '',
+    deposit = '',
     mission = 120000, 
     period = 6,
     expenses1 = '',
@@ -12,19 +12,19 @@ let money = 60000,
     budgetMonth = '',
     budgetDay = '';
 
-console.log(typeof(money));
 console.log(typeof(income));
-console.log(typeof(deposit));
-console.log(addExpenses.length);
 console.log(`Период равен ${period} месяцам,\nцель заработать ${mission} рублей`);
 
 money = prompt('Ваш месячный доход?', '60000');
+console.log(typeof(money));
 
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.',
  'Лицензионное ПО, Связь, Кино').split(', ');
+console.log(addExpenses.length);
 console.log(addExpenses);
 
 deposit = confirm('Есть ли у вас депозит в банке?');
+console.log(typeof(deposit));
 
 expenses1 = prompt('Введите обязательную статью расходов.', 'Коммунальные платежи');
 amount1 = +prompt('Во сколько это обойдется?', '20000');
