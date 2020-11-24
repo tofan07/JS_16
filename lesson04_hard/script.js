@@ -1,6 +1,7 @@
 'use strict';
 
-let str = prompt('Введите любую фразу', 'Ехал Грека через реку, Видит Грека – в реке рак. Сунул Грека руку в реку, - Рак за руку Греку ЦАП !'),
+let str = prompt('Введите любую фразу', 'Ехал Грека через реку, Видит Грека – в реке рак. ' +
+                  'Сунул Грека руку в реку, - Рак за руку Греку ЦАП !'),
     strOutput = '';
 
 let stringCheck = function (str) {
@@ -15,6 +16,7 @@ let stringCheck = function (str) {
 };
 
 stringCheck(str);
+
 if (typeof(str) === 'string') {
   alert(strOutput);
 }
