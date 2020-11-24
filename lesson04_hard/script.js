@@ -15,4 +15,7 @@ let stringCheck = function (str) {
 };
 
 stringCheck(str);
-console.log(strOutput);
+if (typeof(str) === 'string') {
+  alert(strOutput);
+}
+
