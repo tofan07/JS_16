@@ -60,6 +60,6 @@ console.log(`Цель может быть достигнута через ${getT
 // console.log(`Цель может быть достигнута через ${getTargetMonth()} мес.`);
 
 budgetDay = Math.ceil(accumulatedMonth / 30);
-console.log('Бюджет на день: ' + budgetDay + ' руб.');
+console.log(`Бюджет на день: ${budgetDay} руб.`);
 
 getStatusIncome();
