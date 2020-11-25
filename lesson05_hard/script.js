@@ -1,6 +1,6 @@
 'use strict';
 
-//Задание 1
+// //Задание 1
 let arr = [];
 
 let arrPush = function () {
@@ -14,11 +14,19 @@ let arrPush = function () {
   }
   return arr;
 };
-arrPush();
 
+arrPush();
 console.log(arr);
 
 // Задание 2
-for (let i = 0; i < 100; i++) {
-  console.log(`${i} Делители этого числа: 1 и ${i}`);
+alert('Сейчас в консоль выведется столбец простых чисел с их делителями');
+
+start:
+for(let i = 2; i < 100; i++) {
+  for(let n = 2; n < i; n++) {
+    if (i % n === 0) {
+      continue start;
+    }
+  }
+  console.log(`${i} Делители данных чисел: 1 и ${i}`);
 }
