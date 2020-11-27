@@ -29,7 +29,7 @@ let appData = {
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.',
         'Кино, Домино, Лыжи');
         appData.addExpenses = addExpenses.toLowerCase().split(', ');
-
+        // console.log('Возможные расходы за месяц', appData.addExpenses);
         let key, value;
         for (let i = 0; i < 3; i++) {
           key = prompt('Введите обязательную статью расходов.', "Коммунальные платежи").toLowerCase();
@@ -39,7 +39,7 @@ let appData = {
           while (!isNumber(value));
           appData.expenses[key] = +value;
         }
-        console.log(appData.expenses);
+        // console.log('Обязательные расходы за месяц', appData.expenses);
       },
       getExpensesMonth: function() {
         for (let key in this.expenses) {
