@@ -1,85 +1,105 @@
 'use strict';
-// Вариант вывода a 
 
-let date1 = new Date();
-
-let options = {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  weekday: 'long',
-  timezone: 'UTC',
-  hour: 'numeric',
-  minute: 'numeric',
-  second: 'numeric'
-};
-
-let currentDate = date1.toLocaleString("ru", options).split(', ');
-
-function dayTransform(dateArr) {
-  let day = dateArr[0];
-  day = day[0].toUpperCase() + day.slice(1);
-  return day;
-}
-function dateTransform(dateArr) {
-  let date = `${dateArr[1].slice(0, -3)} года`;
-  return date;
-}
-
-function timeTransform(dateArr) {
-  let time = dateArr[2],
-      hours = time.slice(0, 2),
-      minutes = time.slice(3, 5),
-      seconds = time.slice(6, 8);
-  time = hours + minutes + seconds;
-  return time;
-}
-function timeWordsTransform(time) {
-  let hours = time.slice(0, 2),
-      minutes = time.slice(2, 4),
-      seconds = time.slice(4, 6),
-      lastMinute = minutes[1],
-      lastSecond = seconds[1],
-      hoursWord = '',
-      minutesWord = '',
-      secondsWord = '';
-
-  if (hours === '1' || hours === '21') {
-    hoursWord = ' час ';
-    } else if ((hours > '1' && hours < 5) || (hours > 21 && hours < 24) ) {
-      hoursWord = ' часа ';
-      } else {
-        hoursWord = ' часов ';
-      }
-  if (lastMinute === '1' && minutes !== '11') {
-        minutesWord = ' минута ';
-    } else if (lastMinute > '1' && lastMinute < '5' && !(minutes > '11' && minutes < '21')) {
-      minutesWord = ' минуты ';
-      } else {
-        minutesWord = ' минут ';
-      }
-  if (lastSecond === '1' && (seconds !== '11')) {
-        secondsWord = ' секунда ';
-    } else if (lastSecond > '1' && lastSecond < '5' && !(seconds >= '10' && seconds < '21')) {
-      secondsWord = ' секунды ';
-      } else {
-        secondsWord = ' секунд ';
-      }
-      let currentTime = hours + hoursWord + minutes + minutesWord + seconds + secondsWord;
-  return currentTime;
-}
-
-let day = dayTransform(currentDate),
-    date = dateTransform(currentDate),
-    time = timeTransform(currentDate),
-    timeWithWords = timeWordsTransform(time);
-
-let resultDate = `Сегодня ${day}, ${date}, ${timeWithWords}`;
 document.body.innerHTML = `
   <div class="date">
-    <h2>${resultDate}</h2>
+    <h2 class="first"></h2>
+    <h2 class="second"></h2>
   </div>`;
 
-let dateWrap = document.querySelector('.date');
-dateWrap.style = 'color:red';
+let dateWrap = document.querySelector('.first');
+let dateWrap2 = document.querySelector('.second');
+dateWrap.style = 'color:tomato';
+dateWrap2.style = 'color:tomato';
 
+// Вариант вывода a
+function showDate() {
+  let date1 = new Date(),
+    year = date1.getFullYear(),
+    hour = date1.getHours(),
+    minutes = date1.getMinutes(),
+    seconds = date1.getSeconds(),
+    options = { day: 'numeric', month: 'long',},
+    month = date1.toLocaleString("ru", options),
+    currentDay = date1.toLocaleString("ru", {weekday: 'long'});
+
+  function dayUppercasing(date) {
+    let weekday = date[0].toUpperCase() + date.slice(1);
+    return weekday;
+  }
+  let day = dayUppercasing(currentDay);
+
+  function wordsTransform(h, min, sec) {  
+    let testH = h % 10,
+        testMin = min % 10,
+        testSec = sec % 10,
+        hWord, 
+        minWord, 
+        secWord;
+
+    if (h > 10 && h < 20 || h === 0) { hWord = ' часов '; }
+    if (testH > 1 && testH < 4) { hWord = ' часа '; }
+    if (testH === 1) { hWord = ' час '; }
+
+    if (min > 10 && min < 21 || testMin >= 5 && testMin <= 9 || testMin === 0) {
+      minWord = ' минут '; 
+      } else if (testMin > 1 && testMin < 5) { minWord = ' минуты '; }
+    if (testMin === 1 && min !== 11) { minWord = ' минута '; }
+
+    if (sec > 10 && sec < 20 || testSec >= 5 && testSec <= 9 || testSec === 0) { 
+      secWord = ' секунд '; 
+      } else if (testSec > 1 && testSec < 5) { secWord = ' секунды '; }
+    if (testSec === 1 && sec !== 11) { secWord = ' секунда '; }
+    
+    let time = h + hWord + min + minWord + sec + secWord;
+    return time;
+  }
+
+  let currentDate = `Сегодня ${day}, ${month} ${year} года,
+   ${wordsTransform(hour, minutes, seconds)}`;
+
+  function dateOutput() {
+    dateWrap.textContent = currentDate;
+  }
+
+  dateOutput();
+}
+
+showDate();
+
+setInterval(() => {
+  showDate();
+}, 1000);
+
+// Вариант вывода б
+function showDate2() {
+  let date2 = new Date(),
+    year2 = date2.getFullYear(),
+    month2 = date2.getMonth() + 1,
+    day2 = date2.getDate(),
+    hour2 = date2.getHours(),
+    minutes2 = date2.getMinutes(),
+    seconds2 = date2.getSeconds(),
+    dateArr = [day2, month2, hour2, minutes2, seconds2];
+    
+  function addZero() {
+    for (let i = 0; i < 5; i++) {
+      if (dateArr[i] < '10') {
+        dateArr[i] = '0' + dateArr[i];
+      }
+    }
+    return dateArr;
+  }
+  dateArr = addZero();
+  let currentDate2 = `${dateArr[0]}.${dateArr[1]}.${year2} - ${dateArr[2]}:${dateArr[3]}:${dateArr[4]}`;
+  function dateOutput2() {
+    dateWrap2.textContent = currentDate2;
+  }
+
+  dateOutput2();
+}
+
+showDate2();
+
+setInterval(() => {
+  showDate2();
+}, 1000);
