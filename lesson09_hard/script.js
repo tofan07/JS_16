@@ -1,6 +1,7 @@
 'use strict';
-// document.body.innerHTML += '<p><i>' + week[i] + '</i></p>';
-let dateStr = new Date();
+// Вариант вывода a 
+
+let date1 = new Date();
 
 let options = {
   year: 'numeric',
@@ -12,10 +13,8 @@ let options = {
   minute: 'numeric',
   second: 'numeric'
 };
-// console.log(appData.addExpenses.map(arrItem => `${arrItem[0].
-//   toUpperCase()}${arrItem.slice(1)}`).join(', '));
 
-let currentDate = dateStr.toLocaleString("ru", options).split(', ');
+let currentDate = date1.toLocaleString("ru", options).split(', ');
 
 function dayTransform(dateArr) {
   let day = dateArr[0];
@@ -38,31 +37,49 @@ function timeTransform(dateArr) {
 function timeWordsTransform(time) {
   let hours = time.slice(0, 2),
       minutes = time.slice(2, 4),
+      seconds = time.slice(4, 6),
       lastMinute = minutes[1],
+      lastSecond = seconds[1],
       hoursWord = '',
-      minutesWord = '';
+      minutesWord = '',
+      secondsWord = '';
+
   if (hours === '1' || hours === '21') {
-    hoursWord = ' час';
+    hoursWord = ' час ';
     } else if ((hours > '1' && hours < 5) || (hours > 21 && hours < 24) ) {
-      hoursWord = ' часа';
+      hoursWord = ' часа ';
       } else {
-        hoursWord = ' часов';
+        hoursWord = ' часов ';
       }
-  if (lastMinute > '1' || lastMinute < '5') {
-        minutesWord = ' минуты';
-    } else if ((lastMinute === '1')) {
-      minutesWord = ' минута';
+  if (lastMinute === '1' && minutes !== '11') {
+        minutesWord = ' минута ';
+    } else if (lastMinute > '1' && lastMinute < '5' && !(minutes > '11' && minutes < '21')) {
+      minutesWord = ' минуты ';
       } else {
-        minutesWord = ' минут';
+        minutesWord = ' минут ';
       }
-  return hours + hoursWord + minutes;
+  if (lastSecond === '1' && (seconds !== '11')) {
+        secondsWord = ' секунда ';
+    } else if (lastSecond > '1' && lastSecond < '5' && !(seconds >= '10' && seconds < '21')) {
+      secondsWord = ' секунды ';
+      } else {
+        secondsWord = ' секунд ';
+      }
+      let currentTime = hours + hoursWord + minutes + minutesWord + seconds + secondsWord;
+  return currentTime;
 }
 
-let day = dayTransform(currentDate);
-let date = dateTransform(currentDate);
-let time = timeTransform(currentDate);
-let hours = timeWordsTransform(time);
-console.log(hours);
+let day = dayTransform(currentDate),
+    date = dateTransform(currentDate),
+    time = timeTransform(currentDate),
+    timeWithWords = timeWordsTransform(time);
 
-let resultDate = `Сегодня ${day}, ${date}, ${time}`;
-console.log(resultDate);
+let resultDate = `Сегодня ${day}, ${date}, ${timeWithWords}`;
+document.body.innerHTML = `
+  <div class="date">
+    <h2>${resultDate}</h2>
+  </div>`;
+
+let dateWrap = document.querySelector('.date');
+dateWrap.style = 'color:red';
+
