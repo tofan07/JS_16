@@ -60,7 +60,6 @@ function showDate() {
   function dateOutput() {
     dateWrap.textContent = currentDate;
   }
-
   dateOutput();
 }
 
@@ -82,7 +81,7 @@ function showDate2() {
     dateArr = [day2, month2, hour2, minutes2, seconds2];
     
   function addZero() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < dateArr.length; i++) {
       if (dateArr[i] < '10') {
         dateArr[i] = '0' + dateArr[i];
       }
@@ -90,11 +89,13 @@ function showDate2() {
     return dateArr;
   }
   dateArr = addZero();
-  let currentDate2 = `${dateArr[0]}.${dateArr[1]}.${year2} - ${dateArr[2]}:${dateArr[3]}:${dateArr[4]}`;
+
+  let currentDate2 = `${dateArr[0]}.${dateArr[1]}.${year2}
+   - ${dateArr[2]}:${dateArr[3]}:${dateArr[4]}`;
+
   function dateOutput2() {
     dateWrap2.textContent = currentDate2;
   }
-
   dateOutput2();
 }
 
