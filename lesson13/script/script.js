@@ -129,10 +129,18 @@ let appData = {
       },
       resetInputs: function() {
         dataInputs = data.querySelectorAll('input[type=text]');
+
         dataInputs.forEach(function(item) {
           item.removeAttribute('disabled', 'true');
           item.value = '';
         });
+
+        if (depositCheckbox.checked) {
+          depositCheckbox.checked = false;
+        }
+
+        periodSelect.value = 1;
+        periodAmount.textContent = periodSelect.value;
       },
       resetResults: function() {
         resultsInputs = result.querySelectorAll('input[type=text]');
