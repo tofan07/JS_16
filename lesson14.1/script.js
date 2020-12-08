@@ -6,18 +6,19 @@ function DomElement(selector, height, width, bg, fontSize) {
 	this.width = width;
 	this.bg = bg;
 	this.fontSize = fontSize;
-	
-	this.create = function() {
+}
+
+DomElement.prototype.create = function() {
 	const elemSelector = this.selector.slice(1);
 	let newElem;
 
 	if (this.selector.slice(0, 1) === '.') {
-	  newElem = document.createElement('div');
-	  newElem.classList.add(elemSelector);
+	newElem = document.createElement('div');
+	newElem.classList.add(elemSelector);
 	}
 	if (this.selector.slice(0, 1) === '#') {
-	  newElem = document.createElement('p');
-	  newElem.setAttribute('id', elemSelector);
+	newElem = document.createElement('p');
+	newElem.setAttribute('id', elemSelector);
 	}
 
 	newElem.style.cssText = `
@@ -27,12 +28,13 @@ function DomElement(selector, height, width, bg, fontSize) {
 		font-size: ${this.fontSize};`;
 
 	document.body.append(newElem);
-	};
-  this.addText = function(text) {
+};
+
+DomElement.prototype.addText = function(text) {
 	let elem = document.querySelector(this.selector);
 	elem.textContent = text;
-  };
-}
+};
+
 
 const elem = new DomElement('#brown', '250px', '500px', 'brown', '2rem');
 const elem2 = new DomElement('.aqua', '350px', '800px', 'aqua', '1.5rem');
