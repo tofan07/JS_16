@@ -55,7 +55,7 @@ let appData = {
           if (salaryAmount.value === '') {
             start.setAttribute('disabled', 'true');
           } else {
-            start.removeAttribute('disabled', 'true');
+            start.removeAttribute('disabled');
           }
         });
       },
@@ -71,6 +71,7 @@ let appData = {
 
         this.showResult();
         this.disableInputs();
+        this.disablePlusBtns();
         this.showResetBtn();
       },
       reset: function() {
@@ -79,6 +80,7 @@ let appData = {
         this.removeExpensesBlock();
         this.removeIncomeBlock();
         this.startBtnConditionChange();
+        this.enablePlusBtns();
         this.resetItems();
       },
       showResult: function() {
@@ -116,25 +118,34 @@ let appData = {
           };
           
           for (let key in appData){
-            if (Object.prototype.toString.call(appData[key]) !== '[object Function]') {
+            if (appData.hasOwnProperty(key) && Object.prototype.toString.call(appData[key]) !== '[object Function]') {
                 appData[key] = defaults[Object.prototype.toString.call(appData[key])];
             }
           }
-        },
+      },
+      enablePlusBtns: function() {
+        expensesPlus.removeAttribute('disabled');
+        incomePlus.removeAttribute('disabled');
+      },
+      disablePlusBtns: function() {
+        expensesPlus.setAttribute('disabled', 'true');
+        incomePlus.setAttribute('disabled', 'true');
+      },
       disableInputs: function() {
         dataInputs = data.querySelectorAll('input[type=text]');
         dataInputs.forEach(function(item) {
           item.setAttribute('disabled', 'true');
         });
+        depositCheckbox.setAttribute('disabled', 'true');
       },
       resetInputs: function() {
         dataInputs = data.querySelectorAll('input[type=text]');
 
         dataInputs.forEach(function(item) {
-          item.removeAttribute('disabled', 'true');
+          item.removeAttribute('disabled');
           item.value = '';
         });
-
+        depositCheckbox.removeAttribute('disabled');
         if (depositCheckbox.checked) {
           depositCheckbox.checked = false;
         }
