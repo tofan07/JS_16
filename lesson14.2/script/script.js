@@ -359,20 +359,17 @@ AppData.prototype.calcPeriod = function() {
 	return this.budgetMonth * periodSelect.value;
 };
 
-AppData.prototype.eventListeners = function(elem, event, func) {
-	elem.addEventListener(event, func);
+AppData.prototype.eventListeners = function() {
+	start.addEventListener('click', this.start.bind(this));
+	expensesPlus.addEventListener('click', this.addExpensesBlock.bind(this));
+	incomePlus.addEventListener('click', this.addIncomeBlock.bind(this));
 };
 
 const appData = new AppData();
-// console.log('appData: ', appData);
 
 appData.check();
 appData.checkExpensesValues();
 appData.checkAddIncomeValues();
 appData.checkIncomeValues();
-
-appData.eventListeners(start, 'click', appData.start.bind(appData));
-appData.eventListeners(expensesPlus, 'click', appData.addExpensesBlock.bind(appData));
-appData.eventListeners(incomePlus, 'click', appData.addIncomeBlock.bind(appData));
-
+appData.eventListeners();
 appData.getStatusIncome();
