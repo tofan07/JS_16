@@ -19,10 +19,10 @@ const start = document.getElementById('start'),
 	additionalExpensesItem = document.querySelector('.additional_expenses-item'),
 	targetAmount = document.querySelector('.target-amount'),
 	periodSelect = document.querySelector('.period-select'),
-	periodAmount = document.querySelector('.period-amount');
-	
-let	additionalIncomeItems = document.querySelectorAll('.additional_income-item'),
-	incomeItems = document.querySelectorAll('.income-items'),
+	periodAmount = document.querySelector('.period-amount'),
+	additionalIncomeItems = document.querySelectorAll('.additional_income-item');
+
+let incomeItems = document.querySelectorAll('.income-items'),
 	expensesAmounts = document.querySelectorAll('.expenses-amount'),
 	expensesTitles = document.querySelectorAll('input.expenses-title'),
 	expensesItems = document.querySelectorAll('.expenses-items');
@@ -139,7 +139,7 @@ AppData.prototype.disablePlusBtns = function() {
 };
 
 AppData.prototype.disableInputs = function() {
-	let dataInputs = data.querySelectorAll('input[type=text]');
+	const dataInputs = data.querySelectorAll('input[type=text]');
 	dataInputs.forEach((item) => {
 		item.setAttribute('disabled', 'true');
 	});
@@ -147,7 +147,7 @@ AppData.prototype.disableInputs = function() {
 };
 
 AppData.prototype.resetInputs = function() {
-	let dataInputs = data.querySelectorAll('input[type=text]');
+	const dataInputs = data.querySelectorAll('input[type=text]');
 
 	dataInputs.forEach((item) => {
 		item.removeAttribute('disabled');
@@ -163,14 +163,15 @@ AppData.prototype.resetInputs = function() {
 };
 
 AppData.prototype.resetResults = function() {
-	let resultsInputs = result.querySelectorAll('input[type=text]');
+	const resultsInputs = result.querySelectorAll('input[type=text]');
+
 	resultsInputs.forEach((item) => {
 		item.value = '';
 	});
 };
 
 AppData.prototype.addExpensesBlock = function() {
-	let cloneExpensesItem = expensesItems[0].cloneNode(true);
+	const cloneExpensesItem = expensesItems[0].cloneNode(true);
 
 	cloneExpensesItem.querySelectorAll('input').forEach((item) => {
 		item.value = '';
@@ -185,6 +186,7 @@ AppData.prototype.addExpensesBlock = function() {
 
 AppData.prototype.removeExpensesBlock = function() {
 	expensesItems = document.querySelectorAll('.expenses-items');
+
 	if (expensesItems.length > 1) {
 		for (let i = 1; i < expensesItems.length; i++) {
 		expensesItems[i].remove();
@@ -195,8 +197,8 @@ AppData.prototype.removeExpensesBlock = function() {
 
 AppData.prototype.getExpenses = function() {
 	expensesItems.forEach((item) => {
-		let itemExpenses = item.querySelector('.expenses-title').value;
-		let cashExpenses = +item.querySelector('.expenses-amount').value;
+		const itemExpenses = item.querySelector('.expenses-title').value;
+		const cashExpenses = +item.querySelector('.expenses-amount').value;
 		if (itemExpenses !== '' && cashExpenses !== '') {
 			this.expenses[itemExpenses] = cashExpenses;
 		}
@@ -220,7 +222,7 @@ AppData.prototype.checkExpensesValues = function() {
 };
 
 AppData.prototype.getAddExpenses = function() {
-	let addExpenses = additionalExpensesItem.value.split(',');
+	const addExpenses = additionalExpensesItem.value.split(', ');
 
 	addExpenses.forEach((item) => {
 		item = item.trim();
@@ -231,7 +233,7 @@ AppData.prototype.getAddExpenses = function() {
 };
 
 AppData.prototype.addIncomeBlock = function() {
-	let cloneIncomeItem = incomeItems[0].cloneNode(true);
+	const cloneIncomeItem = incomeItems[0].cloneNode(true);
 
 	cloneIncomeItem.querySelectorAll('input').forEach((item) => {
 		item.value = '';
@@ -257,8 +259,8 @@ AppData.prototype.removeIncomeBlock = function() {
 
 AppData.prototype.getIncome = function() {
 	incomeItems.forEach((item) => {
-		let itemIncome = item.querySelector('.income-title').value;
-		let cashIncome = +item.querySelector('.income-amount').value;
+		const itemIncome = item.querySelector('.income-title').value;
+		const cashIncome = +item.querySelector('.income-amount').value;
 
 		if (itemIncome !== '' && cashIncome !== '') {
 		this.income[itemIncome] = cashIncome;
