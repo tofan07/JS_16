@@ -364,7 +364,6 @@ class AppData {
 			}
 		} else {
 			depositPercent.value = '0';
-			console.log(percentError);
 			AppData.prototype.createPercentError();
 			depositCalc.append(percentError);
 			start.setAttribute('disabled', true);
