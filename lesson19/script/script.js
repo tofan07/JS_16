@@ -42,7 +42,8 @@ window.addEventListener('DOMContentLoaded', () => {
 		const menuBtn = document.querySelector('.menu'),
 			menu = document.querySelector('menu'),
 			closeBtn = document.querySelector('.close-btn'),
-			menuItems = menu.querySelectorAll('ul>li');
+			menuItems = menu.querySelectorAll('ul>li'),
+			mouseLink = document.querySelector('main>a');
 
 		const handlerMenu = () => {
 			menu.classList.toggle('active-menu');
@@ -50,7 +51,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		menuBtn.addEventListener('click', handlerMenu);
 		closeBtn.addEventListener('click', handlerMenu);
-		menuItems.forEach(item => item.addEventListener('click', handlerMenu));
+
+		mouseLink.addEventListener('click', function(event) {
+			event.preventDefault();
+			const target = this.getAttribute('href');
+			document.querySelector(target).scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			});
+		});
+
+		menuItems.forEach(item => item.addEventListener('click', event => {
+			handlerMenu();
+			event.preventDefault();
+			const target = item.querySelector('a').getAttribute('href');
+			document.querySelector(target).scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			});
+		}));
+
 	};
 
 	toggleMenu();
