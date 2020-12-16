@@ -1,6 +1,6 @@
 'use strict';
 window.addEventListener('DOMContentLoaded', () => {
-	// Таймер
+	// Timer
 	function countTimer() {
 		const timerHours = document.querySelector('#timer-hours'),
 			timerMinutes = document.querySelector('#timer-minutes'),
@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	countTimer();
 
-	// Меню
+	// Menu
 	const toggleMenu = () => {
 		const menu = document.querySelector('menu');
 
@@ -49,12 +49,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			let target = event.target;
 
 			if (target.matches('a') && !target.matches('.close-btn')) {
+
 				event.preventDefault();
 				const id = target.getAttribute('href');
-				document.querySelector(id).scrollIntoView({
-					behavior: 'smooth',
-					block: 'start'
-				});
+				document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
 				handlerMenu();
 				return;
 
@@ -62,19 +60,18 @@ window.addEventListener('DOMContentLoaded', () => {
 				handlerMenu();
 				return;
 			}
+
 			if (menu.classList.contains('active-menu')) {
 				target = target.closest('.active-menu');
-				if (!target) {
-					handlerMenu();
-				}
+				if (!target) { handlerMenu(); }
 				return;
 			}
+
 			target = target.closest('.menu');
 
 			if (target) {
 				handlerMenu();
 			}
-
 		});
 
 	};
@@ -98,7 +95,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	smoothScroll();
 
 	// Pop-up
-	const togglePopup = function() {
+	const togglePopup = () => {
 		const popup = document.querySelector('.popup'),
 			popupDialog = document.querySelector('.popup-content'),
 			popupBtn = document.querySelectorAll('.popup-btn');
@@ -128,6 +125,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				target = target.closest('.popup-content');
 				if (!target) {
 					popup.style.display = 'none';
+					counter = -30;
 				}
 			}
 		});
