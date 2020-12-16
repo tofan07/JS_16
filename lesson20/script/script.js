@@ -56,9 +56,11 @@ window.addEventListener('DOMContentLoaded', () => {
 					block: 'start'
 				});
 				handlerMenu();
+				return;
 
 			} else if (target.matches('.close-btn')) {
 				handlerMenu();
+				return;
 			}
 			if (menu.classList.contains('active-menu')) {
 				target = target.closest('.active-menu');
