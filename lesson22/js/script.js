@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 
 		checkEmptyBlock() {
-			console.log();
 			if (this.todoList.childNodes.length === 0) {
 				this.listText.style.display = 'block';
 			} else { this.listText.style.display = 'none'; }
@@ -75,15 +74,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		createItem(todo) {
 			const li = document.createElement('li');
+			const text = document.createElement('p');
+			const error = document.createElement('span');
+
 			li.classList.add('todo-left-list__item');
 			li.key = todo.key;
 
+			text.contentEditable = 'false';
+			text.classList.add('todo-list__item-text');
+			text.innerHTML = `<span class="todo-text">${todo.value}</span>`;
+
+			error.classList.add('required-error', 'textError');
+
+			li.insertAdjacentElement('afterbegin', text);
+			li.insertAdjacentElement('beforeend', error);
 			li.insertAdjacentHTML('beforeend', `
-					<span class="todo-text">${todo.value}</span>
-					<a href="#"><img class="checked todo-left__checked" src="
-					./images/check.svg" alt=""></a>
-					<a href="#"><img class="delete todo-right__delete" src="
-					./images/delete.svg" alt=""></a>
+					<a href="#" class="todo-item-link edit-link">
+						<svg class="edit">
+							<use xlink:href="images/sprite.svg#pencil"></use>
+						</svg>
+					</a>
+					<a href="#" class="todo-item-link checked-link">
+						<img class="checked todo-left__checked" src="
+						./images/check.svg" alt="">
+					</a>
+					<a href="#" class="todo-item-link delete-link">
+						<img class="delete todo-right__delete" src="
+						./images/delete.svg" alt="">
+					</a>
 				`);
 
 			if (todo.completed) {
@@ -107,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				this.render();
 
 			} else {
-				this.todoError.textContent = 'Невозможно добавить дело без описания!';
+				this.todoError.textContent = 'Unable to add empty task';
 			}
 
 			this.form.reset();
@@ -116,6 +134,29 @@ document.addEventListener('DOMContentLoaded', () => {
 		generateKey() {
 			return Math.random().toString(36).substring(2, 15) + Math.random().
 				toString(36).substring(2, 15);
+		}
+
+		editItem(todoText, elemKey, todoElem) {
+			todoText.contentEditable = true;
+
+			todoText.addEventListener('blur', () => {
+
+				this.todoData.forEach(item => {
+					if (item.key === elemKey) {
+
+						if (todoText.textContent.trim() !== '') {
+							todoText.contentEditable = false;
+							todoElem.querySelector('.textError').textContent = '';
+							item.value = todoText.textContent.trim();
+						} else {
+							todoElem.querySelector('.textError').textContent = 'This field cannot be empty';
+							return;
+						}
+
+						this.render();
+					}
+				});
+			});
 		}
 
 		deleteItem(elemKey) {
@@ -141,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				const target = event.target;
 				const todoElem = target.closest('li');
 				if (todoElem) {
+					const todoText = todoElem.querySelector('p');
 					const elemKey = todoElem.key;
 
 					if (target.matches('.delete')) {
@@ -148,6 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 					if (target.closest('.checked')) {
 						this.completedItem(elemKey);
+					}
+					if (target.closest('.edit')) {
+						this.editItem(todoText, elemKey, todoElem);
 					}
 				}
 			});
