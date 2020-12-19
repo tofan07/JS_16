@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			this.listText = document.querySelector(todoListText);
 			this.completedText = document.querySelector(todoCompletedText);
 			this.date = document.querySelector(date);
+			this.completedInterval;
+			this.translateValue = 0;
+			this.scaleValue = 1;
 		}
 
 		showDate() {
@@ -79,7 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			li.classList.add('todo-left-list__item');
 			li.key = todo.key;
-
+			li.style.cssText = `
+					opacity: 1;
+					transform: translateX(0);
+					transform: scale(1);
+			`;
 			text.contentEditable = 'false';
 			text.classList.add('todo-list__item-text');
 			text.innerHTML = `<span class="todo-text">${todo.value}</span>`;
@@ -131,6 +138,85 @@ document.addEventListener('DOMContentLoaded', () => {
 			this.form.reset();
 		}
 
+		toDoCompletedAnimate(elem) {
+
+			let opacity = elem.style.opacity;
+
+			if (!elem.closest('ul').matches('.todo-left-list')) {
+				if (opacity > 0.01 && opacity <= 1) {
+					opacity -= 0.05;
+					elem.style.opacity = opacity;
+					this.translateValue -= 15;
+					elem.style.transform = `translateX(${this.translateValue}px)`;
+					elem.classList.add('animated');
+
+				} else {
+					opacity = 1;
+					this.translateValue = 0;
+					elem.classList.remove('animated');
+					cancelAnimationFrame(this.loadingInterval);
+					this.render();
+				}
+
+			} else {
+				if (opacity > 0.01 && opacity <= 1) {
+					opacity -= 0.05;
+					elem.style.opacity = opacity;
+					this.translateValue += 15;
+					elem.style.transform = `translateX(${this.translateValue}px)`;
+					elem.classList.add('animated');
+
+				} else {
+					opacity = 1;
+					this.translateValue = 0;
+					console.log(this.translateValue);
+					elem.classList.remove('animated');
+					cancelAnimationFrame(this.loadingInterval);
+					this.render();
+				}
+			}
+
+			if (elem.classList.contains('animated')) {
+				this.loadingInterval = requestAnimationFrame(() =>
+					this.toDoCompletedAnimate(elem));
+			}
+		}
+
+		todoDeletedAnimate(elem) {
+
+			if (!elem.closest('ul').matches('.todo-left-list')) {
+				if (this.scaleValue > 0.2 && this.scaleValue <= 1) {
+					this.scaleValue -= 0.05;
+					elem.style.transform = `scale(${this.scaleValue})`;
+					elem.classList.add('animated');
+
+				} else {
+					this.scaleValue = 1;
+					elem.classList.remove('animated');
+					cancelAnimationFrame(this.loadingInterval);
+					this.render();
+				}
+
+			} else {
+				if (this.scaleValue > 0.2 && this.scaleValue <= 1) {
+					this.scaleValue -= 0.05;
+					elem.style.transform = `scale(${this.scaleValue})`;
+					elem.classList.add('animated');
+
+				} else {
+					this.scaleValue = 1;
+					elem.classList.remove('animated');
+					cancelAnimationFrame(this.loadingInterval);
+					this.render();
+				}
+			}
+
+			if (elem.classList.contains('animated')) {
+				this.loadingInterval = requestAnimationFrame(() =>
+					this.todoDeletedAnimate(elem));
+			}
+		}
+
 		generateKey() {
 			return Math.random().toString(36).substring(2, 15) + Math.random().
 				toString(36).substring(2, 15);
@@ -149,7 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
 							todoElem.querySelector('.textError').textContent = '';
 							item.value = todoText.textContent.trim();
 						} else {
-							todoElem.querySelector('.textError').textContent = 'This field cannot be empty';
+							todoElem.querySelector('.textError').textContent =
+							'This field cannot be empty';
 							return;
 						}
 
@@ -159,22 +246,25 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 
-		deleteItem(elemKey) {
+		deleteItem(elemKey, elem) {
 			this.todoData.forEach(item => {
 				if (item.key === elemKey) {
 					this.todoData.delete(elemKey);
 				}
 			});
-			this.render();
+			this.loadingInterval = requestAnimationFrame(() =>
+				this.todoDeletedAnimate(elem));
 		}
 
-		completedItem(elemKey) {
+		completedItem(elemKey, elem) {
 			this.todoData.forEach(item => {
 				if (item.key === elemKey) {
 					item.completed = !item.completed;
 				}
 			});
-			this.render();
+
+			this.loadingInterval = requestAnimationFrame(() =>
+				this.toDoCompletedAnimate(elem));
 		}
 
 		handler() {
@@ -186,10 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
 					const elemKey = todoElem.key;
 
 					if (target.matches('.delete')) {
-						this.deleteItem(elemKey);
+						this.deleteItem(elemKey, todoElem);
 					}
 					if (target.closest('.checked')) {
-						this.completedItem(elemKey);
+						this.completedItem(elemKey, todoElem);
 					}
 					if (target.closest('.edit')) {
 						this.editItem(todoText, elemKey, todoElem);
