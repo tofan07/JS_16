@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			this.listText = document.querySelector(todoListText);
 			this.completedText = document.querySelector(todoCompletedText);
 			this.date = document.querySelector(date);
-			this.completedInterval;
 			this.translateValue = 0;
 			this.scaleValue = 1;
 		}
