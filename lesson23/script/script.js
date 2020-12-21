@@ -278,4 +278,39 @@ window.addEventListener('DOMContentLoaded', () => {
 	};
 
 	slider();
+
+	// Calc
+	const calc = () => {
+		const calcInputs = document.querySelectorAll('input.calc-item');
+
+		calcInputs.forEach(item => {
+			item.addEventListener('input', () => { item.value = item.value.replace(/[\D]/, ''); });
+		});
+	};
+
+	calc();
+
+	// Command section
+	const command = () => {
+		const commandWrapper = document.getElementById('command');
+
+		let imageSrc,
+			currentImage;
+
+		commandWrapper.addEventListener('mouseover', event => {
+			let target = event.target;
+
+			target = target.closest('img');
+
+			if (target) {
+				imageSrc = target.getAttribute('src');
+				currentImage = target;
+				target.src = target.dataset.img;
+			} else if (currentImage) {
+				currentImage.src = imageSrc;
+			}
+		});
+	};
+
+	command();
 });
