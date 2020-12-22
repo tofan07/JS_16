@@ -280,13 +280,21 @@ window.addEventListener('DOMContentLoaded', () => {
 	slider();
 
 	// Calc
-	const calc = () => {
+	const calc = (price = 100) => {
 		const calcBlock = document.querySelector('.calc-block'),
 			calcType = document.querySelector('.calc-type'),
 			calcSqare = document.querySelector('.calc-square'),
 			calcDay = document.querySelector('.calc-day'),
 			calcCount = document.querySelector('.calc-count'),
 			totalValue = document.getElementById('total');
+
+		const countSum = () => {
+			let total = 0;
+			let typeValue = calcType.options[calcType.selectedIndex];
+			console.log(typeValue);
+			let squareValue;
+			totalValue.textContent = total;
+		};
 
 
 		calcBlock.addEventListener('input', event => {
@@ -297,16 +305,15 @@ window.addEventListener('DOMContentLoaded', () => {
 		calcBlock.addEventListener('change', event => {
 			const target = event.target;
 
-			if (target === calcType || target === calcSqare ||
-				target === calcDay || target === calcCount) {
-
+			if (target.matches('input') || target.matches('select')) {
+				countSum();
 			}
 		});
 
 
 	};
 
-	calc();
+	calc(100);
 
 	// Command section
 	const command = () => {
