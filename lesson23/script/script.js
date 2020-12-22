@@ -281,11 +281,29 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	// Calc
 	const calc = () => {
-		const calcInputs = document.querySelectorAll('input.calc-item');
+		const calcBlock = document.querySelector('.calc-block'),
+			calcType = document.querySelector('.calc-type'),
+			calcSqare = document.querySelector('.calc-square'),
+			calcDay = document.querySelector('.calc-day'),
+			calcCount = document.querySelector('.calc-count'),
+			totalValue = document.getElementById('total');
 
-		calcInputs.forEach(item => {
-			item.addEventListener('input', () => { item.value = item.value.replace(/[\D]/, ''); });
+
+		calcBlock.addEventListener('input', event => {
+			const target = event.target;
+			target.value = target.value.replace(/[\D]/, '');
 		});
+
+		calcBlock.addEventListener('change', event => {
+			const target = event.target;
+
+			if (target === calcType || target === calcSqare ||
+				target === calcDay || target === calcCount) {
+
+			}
+		});
+
+
 	};
 
 	calc();
