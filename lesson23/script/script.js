@@ -286,7 +286,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		calcBlock.addEventListener('input', event => {
 			const target = event.target;
-			target.value = target.value.replace(/[\D]/, '');
+			if (!target.matches('select')) {
+				target.value = target.value.replace(/[\D]/, '');
+			}
 		});
 	};
 
