@@ -281,10 +281,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	// Calc
 	const calc = () => {
-		const calcInputs = document.querySelectorAll('input.calc-item');
+		const calcBlock = document.querySelector('.calc-block');
 
-		calcInputs.forEach(item => {
-			item.addEventListener('input', () => { item.value = item.value.replace(/[\D]/, ''); });
+
+		calcBlock.addEventListener('input', event => {
+			const target = event.target;
+			target.value = target.value.replace(/[\D]/, '');
 		});
 	};
 
