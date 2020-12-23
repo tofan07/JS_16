@@ -289,11 +289,13 @@ window.addEventListener('DOMContentLoaded', () => {
 			calcCount = document.querySelector('.calc-count'),
 			totalValue = document.getElementById('total');
 
+		let count = 0;
+
 		const countSum = () => {
 			let total = 0,
 				countValue = 1,
-				dayValue = 1,
-				count = 0;
+				dayValue = 1;
+			let testNum;
 
 			const typeValue = calcType.options[calcType.selectedIndex].value,
 				squareValue = +calcSqare.value;
@@ -311,14 +313,40 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			if (typeValue && squareValue) {
 				total = price * typeValue * squareValue * countValue * dayValue;
+				testNum = total / 500;
+				console.log('testNum: ', testNum);
 			}
 
 			totalInterval = setInterval(() => {
-				if (count < total && total > 2) {
-					count++;
-					totalValue.textContent = count;
+				if (total < 1000) {
+					if (count < total) {
+						count++;
+						totalValue.textContent = Math.floor(count);
+					} else if (count > total) {
+						count--;
+						totalValue.textContent = Math.floor(count);
+					} else {
+						totalValue.textContent = Math.floor(total);
+						clearInterval(totalInterval);
+					}
 				} else {
-					clearInterval(totalInterval);
+					if (count >= 0 && count <= (total - 500)) {
+						count += testNum;
+						totalValue.textContent = Math.floor(count);
+
+					} else if (count >= total + 500) {
+						count -= testNum;
+						totalValue.textContent = Math.floor(count);
+
+					} else if (count > total || count < total + 500 || count < total ||
+						count > total - 500 || count <= 0) {
+						totalValue.textContent = Math.floor(total);
+						clearInterval(totalInterval);
+
+					} else {
+						totalValue.textContent = 0;
+						count = 0;
+					}
 				}
 			}, 1);
 
