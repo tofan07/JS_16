@@ -314,7 +314,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (typeValue && squareValue) {
 				total = price * typeValue * squareValue * countValue * dayValue;
 				testNum = total / 500;
-				console.log('testNum: ', testNum);
 			}
 
 			totalInterval = setInterval(() => {
