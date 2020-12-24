@@ -98,6 +98,12 @@ class Validator {
                 font-family: sans-serif;
 				color: red;
 			}
+			.form3-error {
+				position: absolute;
+				top: 0px;
+				left: 20px;
+				text-align: left;
+			}
 			.form2-error {
 				position: absolute;
 				top: 0px;
