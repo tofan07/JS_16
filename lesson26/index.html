@@ -408,13 +408,15 @@
 		</div>
 	</div>
 </div>
-<script src="script/validator.js"></script>
-<script src="script/script.js"></script>
+
+<script src="./script/validator.js"></script>
+<script src="./script/maskPhone.js"></script>
+<script src="./script/script.js"></script>
 <script>
 	const valid = new Validator({
 		selector: '#form1',
 		pattern: {
-			name: /^[а-я]+$/i,
+			name: /^[а-я\s]+$/i,
 		},
 		method: {
 			'form1-name': [
@@ -423,7 +425,8 @@
 			],
 			'form1-phone': [
 				['notEmpty'],
-				['pattern', 'phone'],
+				['minLength'],
+				// ['pattern', 'phone'],
 			],
 			'form1-email': [
 				['notEmpty'],
@@ -438,8 +441,8 @@
 	const valid2 = new Validator({
 		selector: '#form2',
 		pattern: {
-			name: /^[а-я]+$/i,
-			message: /^[а-я]+$/i
+			name: /^[а-я\s]+$/i,
+			message: /^[^a-z]+$/i
 		},
 		method: {
 			'form2-name': [
@@ -448,7 +451,8 @@
 			],
 			'form2-phone': [
 				['notEmpty'],
-				['pattern', 'phone'],
+				['minLength'],
+				// ['pattern', 'phone'],
 			],
 			'form2-email': [
 				['notEmpty'],
@@ -466,7 +470,7 @@
 	const valid3 = new Validator({
 		selector: '#form3',
 		pattern: {
-			name: /^[а-я]+$/i,
+			name: /^[а-я\s]+$/i,
 		},
 		method: {
 			'form3-name': [
@@ -475,7 +479,8 @@
 			],
 			'form3-phone': [
 				['notEmpty'],
-				['pattern', 'phone'],
+				['minLength'],
+				// ['pattern', 'phone'],
 			],
 			'form3-email': [
 				['notEmpty'],
@@ -483,8 +488,10 @@
 			],
 		}
 	});
-
 	valid3.init();
+
+
+	maskPhone('.form-phone');
 </script>
 </body>
 </html>

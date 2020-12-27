@@ -14,12 +14,27 @@ class Validator {
 	init() {
 		this.allpyStyle();
 		this.setPattern();
+		this.elementsForm.forEach(elem => {
+			if (elem.matches('.mess')) {
+				elem.addEventListener('input', () => {
+					elem.value = elem.value.replace(/^[a-z]+$/i, '');
+				});
+			}
+			if (elem.name === 'user_name') {
+				elem.addEventListener('input', () => {
+					elem.value = elem.value.replace(/[^а-я ]+$/i, '');
+				});
+			}
+		});
 		this.elementsForm.forEach(elem => elem.addEventListener('change', this.checkIt.bind(this)));
 		this.form.addEventListener('submit', event => {
 			event.preventDefault();
 			this.elementsForm.forEach(elem => this.checkIt({ target: elem }));
 			if (this.error.size) {
+				localStorage.removeItem('isValid');
 				event.preventDefault();
+			} else {
+				localStorage.setItem('isValid', 'true');
 			}
 		});
 	}
@@ -32,8 +47,17 @@ class Validator {
 				}
 				return true;
 			},
+
 			pattern(elem, pattern) {
 				return pattern.test(elem.value);
+			},
+
+			minLength(elem) {
+				const elemValue = elem.value.trim();
+				if (elemValue.length < 18) {
+					return false;
+				}
+				return true;
 			}
 		};
 
@@ -46,7 +70,6 @@ class Validator {
 		} else {
 			console.warn('Необходимо передать id полей ввода и методы проверки этих полей!');
 		}
-
 
 		return true;
 	}
@@ -124,7 +147,7 @@ class Validator {
 	}
 	setPattern() {
 		if (!this.pattern.phone) {
-			this.pattern.phone = /^\+?[78]([-()]*\d){10}$/;
+			// this.pattern.phone = /^\+?[78]([-()]*\d){10}$/;
 		}
 		if (!this.pattern.email) {
 			this.pattern.email = /^\w+@\w+\.\w{2,}$/;
