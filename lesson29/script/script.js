@@ -440,7 +440,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			formData.forEach((val, key) => {
 				body[key] = val;
 			});
-
+			// eslint-disable-next-line no-use-before-define
 			postData(body)
 				.then(showSuccess)
 				.then(target.reset())
@@ -449,7 +449,11 @@ window.addEventListener('DOMContentLoaded', () => {
 			localStorage.removeItem('isValid');
 		});
 
-		const showSuccess = () => {
+		const showSuccess = response => {
+			if (response.status !== 200) {
+				throw new Error('network status not 200!');
+			}
+
 			statusMessage.textContent = successMessage;
 			statusMessage.style.color = '#19b5fe';
 		};
@@ -460,23 +464,12 @@ window.addEventListener('DOMContentLoaded', () => {
 			console.error(error);
 		};
 
-		const postData = body => new Promise((resolve, reject) => {
-			const request = new XMLHttpRequest();
-
-			request.addEventListener('readystatechange', () => {
-				if (request.readyState !== 4) {
-					return;
-				}
-				if (request.status === 200) {
-					resolve();
-				} else {
-					reject(request.status);
-				}
-			});
-
-			request.open('POST', './server.php');
-			request.setRequestHeader('Content-Type', 'multipart/form-data');
-			request.send(JSON.stringify(body));
+		const postData = body => fetch('./server.php', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
 		});
 	};
 
