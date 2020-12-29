@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 'use strict';
 window.addEventListener('DOMContentLoaded', () => {
 	// Timer
@@ -440,20 +441,26 @@ window.addEventListener('DOMContentLoaded', () => {
 				body[key] = val;
 			});
 
-			// eslint-disable-next-line no-use-before-define
-			postData(body, () => {
-				target.reset();
-				statusMessage.textContent = successMessage;
-				statusMessage.style.color = '#19b5fe';
-			}, error => {
-				statusMessage.textContent = errorMessage;
-				statusMessage.style.color = 'red';
-				console.error(error);
-			});
+			postData(body)
+				.then(showSuccess)
+				.then(target.reset())
+				.catch(showError);
+
 			localStorage.removeItem('isValid');
 		});
 
-		const postData = (body, outputData, errorData) => {
+		const showSuccess = () => {
+			statusMessage.textContent = successMessage;
+			statusMessage.style.color = '#19b5fe';
+		};
+
+		const showError = error => {
+			statusMessage.textContent = errorMessage;
+			statusMessage.style.color = 'red';
+			console.error(error);
+		};
+
+		const postData = body => new Promise((resolve, reject) => {
 			const request = new XMLHttpRequest();
 
 			request.addEventListener('readystatechange', () => {
@@ -461,16 +468,16 @@ window.addEventListener('DOMContentLoaded', () => {
 					return;
 				}
 				if (request.status === 200) {
-					outputData();
+					resolve();
 				} else {
-					errorData(request.status);
+					reject(request.status);
 				}
 			});
 
 			request.open('POST', './server.php');
 			request.setRequestHeader('Content-Type', 'multipart/form-data');
 			request.send(JSON.stringify(body));
-		};
+		});
 	};
 
 	sendForm();
