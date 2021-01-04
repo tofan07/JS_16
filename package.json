@@ -1,0 +1,30 @@
+{
+  "name": "javascript_16.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.prod.config.js",
+    "dev": "webpack serve --config webpack.dev.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tofan07/JS_16.git"
+  },
+  "author": "Anton Ivanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tofan07/JS_16/issues"
+  },
+  "homepage": "https://github.com/tofan07/JS_16#readme",
+  "dependencies": {
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "webpack-dev-server": "^3.11.1"
+  }
+}
