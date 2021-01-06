@@ -5,7 +5,7 @@ function countTimer() {
 		timerSeconds = document.querySelector('#timer-seconds');
 
 	function getTimeRemaining() {
-		const	deadline = '17 december 2020',
+		const	deadline = '8 January 2021',
 			dateStop = new Date(deadline).getTime(),
 			dateNow = new Date().getTime(),
 			timeRemaining = (dateStop - dateNow) / 1000,

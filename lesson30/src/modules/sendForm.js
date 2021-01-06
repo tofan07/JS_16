@@ -58,6 +58,10 @@ const sendForm = () => {
 
 		statusMessage.textContent = successMessage;
 		statusMessage.style.color = '#19b5fe';
+		console.log(statusMessage);
+		setTimeout(()=>{
+			statusMessage.remove();
+		}, 5000)
 	};
 
 	const showError = error => {

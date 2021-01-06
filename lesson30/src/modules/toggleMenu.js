@@ -8,9 +8,7 @@ const toggleMenu = () => {
 
 	document.addEventListener('click', event => {
 		let target = event.target;
-
-		if (target.matches('a') && !target.matches('.close-btn') && target.classList === undefined) {
-
+		if (target.matches('a') && !target.matches('.close-btn') && target.classList.length === 0) {
 			event.preventDefault();
 			const id = target.getAttribute('href');
 			document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });

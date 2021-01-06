@@ -17,7 +17,7 @@ class Validator {
 		this.elementsForm.forEach(elem => {
 			if (elem.matches('.mess')) {
 				elem.addEventListener('input', () => {
-					elem.value = elem.value.replace(/^[a-z]+$/i, '');
+					elem.value = elem.value.replace(/[^а-я !?,.]+$/i, '');
 				});
 			}
 			if (elem.name === 'user_name') {

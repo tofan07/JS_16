@@ -8,8 +8,6 @@ const calc = (price = 100) => {
 		calcCount = document.querySelector('.calc-count'),
 		totalValue = document.getElementById('total');
 
-	let count = 0;
-
 	const countSum = () => {
 		let total = 0,
 			countValue = 1,
@@ -18,7 +16,7 @@ const calc = (price = 100) => {
 
 		const typeValue = calcType.options[calcType.selectedIndex].value,
 			squareValue = +calcSqare.value;
-		let totalInterval = false;
+
 
 		if (calcCount.value > 1) {
 			countValue += (calcCount.value - 1) / 10;
@@ -32,41 +30,44 @@ const calc = (price = 100) => {
 
 		if (typeValue && squareValue) {
 			total = price * typeValue * squareValue * countValue * dayValue;
-			testNum = total / 500;
 		}
 
-		totalInterval = setInterval(() => {
-			if (total < 1000) {
-				if (count < total) {
-					count++;
-					totalValue.textContent = Math.floor(count);
-				} else if (count > total) {
-					count--;
-					totalValue.textContent = Math.floor(count);
-				} else {
-					totalValue.textContent = Math.floor(total);
-					clearInterval(totalInterval);
+		 // функция запуска анимации (итоговый каунтТотал мы узнаем ранее)
+		 function animate({ duration, draw, timing }) {
+
+			let start = performance.now();
+	
+			requestAnimationFrame(function animate(time) {
+	
+				let timeFraction = (time - start) / duration;
+	
+				if (timeFraction > 1) timeFraction = 1;
+	
+				let progress = timing(timeFraction)
+	
+				draw(progress);
+	
+				if (timeFraction < 1) {
+					requestAnimationFrame(animate);
 				}
-			} else {
-				if (count >= 0 && count <= (total - 500)) {
-					count += testNum;
-					totalValue.textContent = Math.floor(count);
-
-				} else if (count >= total + 500) {
-					count -= testNum;
-					totalValue.textContent = Math.floor(count);
-
-				} else if (count > total || count < total + 500 || count < total ||
-                    count > total - 500 || count <= 0) {
-					totalValue.textContent = Math.floor(total);
-					clearInterval(totalInterval);
-
-				} else {
-					totalValue.textContent = 0;
-					count = 0;
-				}
+	
+			});
+		}
+	
+		animate({
+			// скорость анимации
+			duration: 2000,
+			// Функция расчёта времени
+			timing(timeFraction) {
+				return timeFraction;
+			},
+			// Функция отрисовки
+			draw(progress) {
+				// в ней мы и производим вывод данных
+				totalValue.textContent = Math.floor(progress * total)
+	
 			}
-		}, 1);
+		});
 
 	};
 

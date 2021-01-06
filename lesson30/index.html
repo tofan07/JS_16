@@ -412,6 +412,7 @@
 
 <script src="./src/validator.js"></script>
 <script src="./src/maskPhone.js"></script>
+<script src="./src/smoothscroll.js"></script>
 <script src="./dist/bundle.js"></script>
 <script>
 	const valid = new Validator({
@@ -443,7 +444,7 @@
 		selector: '#form2',
 		pattern: {
 			name: /^[а-я\s]+$/i,
-			message: /^[^a-z]+$/i
+			// message: /^[^a-z]+$/i
 		},
 		method: {
 			'form2-name': [
